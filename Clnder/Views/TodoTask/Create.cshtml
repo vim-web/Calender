@@ -1,0 +1,73 @@
+﻿
+@model Clnder.Models.TodoTask
+
+@{
+    ViewBag.Title = "Create Task";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create New Task</h2>
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <strong>Task Details</strong>
+            </div>
+            <div class="card-body">
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="Title">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter task title" })
+                    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="Description">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter task description", rows = "4" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Status -->
+                <div class="form-group">
+                    <label for="Status">Status</label>
+                    @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Pending", "In Progress", "Completed" }), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Due Date -->
+                <div class="form-group">
+                    <label for="DueDate">Due Date</label>
+                    @Html.TextBoxFor(m => m.DueDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.DueDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="fas fa-save"></i> Save Task
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+

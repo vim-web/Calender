@@ -1,0 +1,93 @@
+﻿
+@model Clnder.Models.TodoTask
+
+@{
+    ViewBag.Title = "Edit Task";
+}
+<head>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">Edit Task</h2>
+
+    <form method="post" class="needs-validation" novalidate>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)  @* Keeps the task ID hidden *@
+
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <strong>Task Details</strong>
+            </div>
+            <div class="card-body">
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="Title" class="font-weight-bold">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter task title", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="Description" class="font-weight-bold">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter task description", rows = "4", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Status -->
+                <div class="form-group">
+                    <label for="Status" class="font-weight-bold">Status</label>
+                    @Html.DropDownListFor(m => m.Status,
+                        new SelectList(new[] { "Pending", "In Progress", "Completed" }),
+                        new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Due Date -->
+                <div class="form-group">
+                    <label for="DueDate" class="font-weight-bold">Due Date</label>
+                    @Html.TextBoxFor(m => m.DueDate, new { @class = "form-control", type = "date", required = "required" })
+                    @Html.ValidationMessageFor(m => m.DueDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-arrow-left"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Optional: Add custom form validation styles -->
+<script>
+    // Example of form validation
+    (function () {
+        'use strict'
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation')
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        }, false)
+    })();
+</script>
+
+
+
